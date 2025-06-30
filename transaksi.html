@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi - Aplikasi Simpan Pinjam</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo Aplikasi Simpan Pinjam">
+            <h1>Simpan Pinjam</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="transaksi.html" class="active">Transaksi</a></li>
+                <li><a href="daftar-transaksi.html">Daftar Transaksi</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Form Transaksi</h2>
+            <form id="form-transaksi">
+                <div class="form-group">
+                    <label for="nama-transaksi">Nama Transaksi</label>
+                    <input type="text" id="nama-transaksi" name="nama-transaksi" placeholder="Contoh: Simpanan Bulan Januari">
+                    <div class="error" id="error-nama">Nama transaksi harus diisi</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="jumlah">Jumlah (Rp)</label>
+                    <input type="number" id="jumlah" name="jumlah" placeholder="Masukkan jumlah">
+                    <div class="error" id="error-jumlah">Jumlah harus diisi</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="kategori">Kategori</label>
+                    <select id="kategori" name="kategori">
+                        <option value="">Pilih Kategori</option>
+                        <option value="simpan">Simpan</option>
+                        <option value="pinjam">Pinjam</option>
+                    </select>
+                    <div class="error" id="error-kategori">Kategori harus dipilih</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tanggal">Tanggal Transaksi</label>
+                    <input type="date" id="tanggal" name="tanggal">
+                    <div class="error" id="error-tanggal">Tanggal harus diisi</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="keterangan">Keterangan (Opsional)</label>
+                    <input type="text" id="keterangan" name="keterangan" placeholder="Tambahkan keterangan jika perlu">
+                </div>
+                
+                <button type="submit">Simpan Transaksi</button>
+            </form>
+            
+            <div style="margin-top: 2rem;">
+                <a href="daftar-transaksi.html">Lihat Daftar Transaksi</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Aplikasi Simpan Pinjam. Semua hak dilindungi.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formTransaksi = document.getElementById('form-transaksi');
+            
+            formTransaksi.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // Validasi nama transaksi
+                const namaTransaksi = document.getElementById('nama-transaksi');
+                if (!namaTransaksi.value.trim()) {
+                    document.getElementById('error-nama').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('error-nama').style.display = 'none';
+                }
+                
+                // Validasi jumlah
+                const jumlah = document.getElementById('jumlah');
+                if (!jumlah.value.trim()) {
+                    document.getElementById('error-jumlah').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('error-jumlah').style.display = 'none';
+                }
+                
+                // Validasi kategori
+                const kategori = document.getElementById('kategori');
+                if (!kategori.value) {
+                    document.getElementById('error-kategori').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('error-kategori').style.display = 'none';
+                }
+                
+                // Validasi tanggal
+                const tanggal = document.getElementById('tanggal');
+                if (!tanggal.value) {
+                    document.getElementById('error-tanggal').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('error-tanggal').style.display = 'none';
+                }
+                
+                if (isValid) {
+                    // Simpan ke localStorage
+                    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+                    const newTransaction = {
+                        id: Date.now(),
+                        nama: namaTransaksi.value,
+                        jumlah: parseInt(jumlah.value),
+                        kategori: kategori.value,
+                        tanggal: tanggal.value,
+                        keterangan: document.getElementById('keterangan').value
+                    };
+                    
+                    transactions.push(newTransaction);
+                    localStorage.setItem('transactions', JSON.stringify(transactions));
+                    
+                    // Reset form
+                    formTransaksi.reset();
+                    
+                    // Tampilkan pesan sukses
+                    alert('Transaksi berhasil disimpan!');
+                    
+                    // Redirect ke halaman daftar transaksi
+                    window.location.href = 'daftar-transaksi.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

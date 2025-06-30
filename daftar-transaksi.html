@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Transaksi - Aplikasi Simpan Pinjam</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo Aplikasi Simpan Pinjam">
+            <h1>Simpan Pinjam</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="transaksi.html">Transaksi</a></li>
+                <li><a href="daftar-transaksi.html" class="active">Daftar Transaksi</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Daftar Transaksi</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Transaksi</th>
+                        <th>Jumlah</th>
+                        <th>Kategori</th>
+                        <th>Tanggal</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody id="transaksi-list">
+                    <!-- Data transaksi akan dimasukkan melalui JavaScript -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Aplikasi Simpan Pinjam. Semua hak dilindungi.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+            const tbody = document.getElementById('transaksi-list');
+            
+            if (transactions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Belum ada transaksi</td></tr>';
+            } else {
+                tbody.innerHTML = '';
+                
+                transactions.forEach((trans, index) => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${trans.nama}</td>
+                        <td>${formatCurrency(trans.jumlah)}</td>
+                        <td>${trans.kategori === 'simpan' ? 'Simpan' : 'Pinjam'}</td>
+                        <td>${formatDate(trans.tanggal)}</td>
+                        <td>${trans.keterangan || '-'}</td>
+                    `;
+                    
+                    tbody.appendChild(row);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

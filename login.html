@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Aplikasi Simpan Pinjam</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Logo Aplikasi Simpan Pinjam">
+            <h1>Simpan Pinjam</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="transaksi.html">Transaksi</a></li>
+                <li><a href="daftar-transaksi.html">Daftar Transaksi</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="login.html" class="active">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Login</h2>
+            <form id="form-login">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Masukkan username">
+                    <div class="error" id="error-username">Username harus diisi</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Masukkan password">
+                    <div class="error" id="error-password">Password harus diisi</div>
+                </div>
+                
+                <button type="submit">Login</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Aplikasi Simpan Pinjam. Semua hak dilindungi.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formLogin = document.getElementById('form-login');
+            
+            formLogin.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let isValid = true;
+                
+                // Validasi username
+                const username = document.getElementById('username');
+                if (!username.value.trim()) {
+                    document.getElementById('error-username').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('error-username').style.display = 'none';
+                }
+                
+                // Validasi password
+                const password = document.getElementById('password');
+                if (!password.value.trim()) {
+                    document.getElementById('error-password').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('error-password').style.display = 'none';
+                }
+                
+                if (isValid) {
+                    // Simulasi login
+                    alert('Login berhasil!');
+                    
+                    // Redirect ke halaman beranda
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
